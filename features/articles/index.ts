@@ -34,6 +34,8 @@ import { buttonDesignBasics } from "./content/button-design-basics";
 import { cssCursorHowToUse } from "./content/css-cursor-how-to-use";
 import { cssTransitionHowToUse } from "./content/css-transition-how-to-use";
 import { cssPositionBasics } from "./content/css-position-basics";
+import { whatIsTypescript } from "./content/what-is-typescript";
+import { cssLayoutFlexGridDifference } from "./content/css-layout-flex-grid-difference";
 // 記事が増えたらここにimport追加
 
 /**
@@ -51,6 +53,8 @@ const rawArticles = [
   cssCursorHowToUse,
   cssTransitionHowToUse,
   cssPositionBasics,
+  whatIsTypescript,
+  cssLayoutFlexGridDifference,
 ];
 
 /**
