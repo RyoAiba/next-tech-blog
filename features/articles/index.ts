@@ -36,6 +36,7 @@ import { cssTransitionHowToUse } from "./content/css-transition-how-to-use";
 import { cssPositionBasics } from "./content/css-position-basics";
 import { whatIsTypescript } from "./content/what-is-typescript";
 import { cssLayoutFlexGridDifference } from "./content/css-layout-flex-grid-difference";
+import { vuePerformanceOptimization } from "./content/vue-performance-optimization";
 // 記事が増えたらここにimport追加
 
 /**
@@ -55,24 +56,40 @@ const rawArticles = [
   cssPositionBasics,
   whatIsTypescript,
   cssLayoutFlexGridDifference,
+  vuePerformanceOptimization,
 ];
 
 /**
  * updatedAtを追加した記事配列
  */
 export const articles: Article[] = rawArticles.map((article) => {
+  const updatedAt = (() => {
+    try {
+      return getUpdatedAt(
+        `features/articles/content/${article.slug}.ts`
+      );
+    } catch {
+      return article.publishedAt;
+    }
+  })();
+
   return {
     ...article,
-    updatedAt: (() => {
-      try {
-        return getUpdatedAt(
-          `features/articles/content/${article.slug}.ts`
-        );
-      } catch {
-        return article.publishedAt;
-      }
-    })(),
+    updatedAt,
   };
+})
+.sort((a, b) => {
+  // 比較基準日を決定
+  const dateA = new Date(
+    (a.updatedAt ?? a.publishedAt).replace(/\./g, "-")
+  ).getTime();
+
+  const dateB = new Date(
+    (b.updatedAt ?? b.publishedAt).replace(/\./g, "-")
+  ).getTime();
+
+  // 新しいものを先頭に（降順）
+  return dateB - dateA;
 });
 
 /**

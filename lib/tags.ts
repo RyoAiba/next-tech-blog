@@ -1,6 +1,7 @@
 export const tags = [
   // 技術
   { name: "React", slug: "react" },
+  { name: "Vue", slug: "vue" },
   { name: "Next.js", slug: "nextjs" },
   { name: "TypeScript", slug: "typescript" },
   { name: "JavaScript", slug: "javascript" },
@@ -9,6 +10,5 @@ export const tags = [
 
   // テーマ
   { name: "パフォーマンス", slug: "performance" },
-  { name: "アーキテクチャ", slug: "architecture" },
   { name: "UI", slug: "ui" },
 ];
