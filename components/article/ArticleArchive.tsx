@@ -33,18 +33,19 @@ export default function ArticleArchive({ title, articles ,totalPages ,currentPag
             title={title}
         />
         {totalPages && totalPages > 1 && (
-          <div className="flex gap-2 mt-8">
+          <div className="flex gap-2 md:mx-4 mt-8 justify-center">
             {Array.from({ length: totalPages }).map((_, i) => {
               const page = i + 1;
+              const baseClass = "px-3 py-1 rounded-md border";
               return (
                 <Link
                   key={page}
                   href={`${basePath}?page=${page}`}
-                  className={
+                  className={`${baseClass} ${
                     page === currentPage
-                      ? "px-3 py-1 bg-black text-white"
-                      : "px-3 py-1 border"
-                  }
+                      ? "border-[var(--brand-500)] bg-[var(--brand-500)] text-white"
+                      : "border-zinc-300 hover:bg-zinc-200 text-zinc-700"
+                  }`}
                 >
                   {page}
                 </Link>
