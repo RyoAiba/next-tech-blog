@@ -2,29 +2,27 @@ import { Article } from "../index";
 
 export const javascriptScrollChangeCss: Article = {
   slug: "javascript-scroll-change-css",
-  title: "スクロールでCSSを切り替える方法をちゃんと理解する",
+  title: "scrollイベントとIntersectionObserver、結局どっちを使えばいい？",
   description:
-    "scrollイベントとIntersectionObserverを使って、スクロール位置に応じてスタイルを変更する実装方法を解説。",
+    "scrollイベントとIntersectionObserverを使ったスクロール連動UIの実装を解説。パフォーマンスを意識したclass切り替えのコツも紹介します。",
   publishedAt: "2026.02.23",
   tags: [
     { name: "JavaScript", slug: "javascript" },
     { name: "CSS", slug: "css" },
+    { name: "パフォーマンス", slug: "performance" },
   ],
   content: `
-    <h2>スクロール位置でCSSを変更する方法</h2>
-    <p>
-      スクロール位置に応じてヘッダーや背景色を変更したいケースはよくあります。<br />
-      たとえば「ある位置を超えたらヘッダーを固定する」「セクションごとに背景色を変える」といったUIは、よく見る実装ですよね。
-    </p>
-    <p>
-      この記事ではscrollイベントを使う方法と、よりモダンなIntersectionObserverを使う方法をそれぞれのメリット・デメリットも含めて解説します。
-    </p>
+<p>
+  ヘッダーがスクロールで色変わったり、セクションに入ったら背景が切り替わったり。<br />
+  よく見るUIですよね。「なんとなく動く」実装から「なぜそう書くか分かる」実装を目指して整理します。
+</p>
 
-    <h2>scrollイベントを使う基本実装</h2>
-    <p>
-      まずはwindowのscrollイベントを使ってスクロール量を取得します。<br />
-      scrollイベントは「スクロールするたびに発火するイベント」で、現在のスクロール位置はwindow.scrollYで取得できます。
-    </p>
+<h2>scrollイベントを使う基本実装</h2>
+<p>
+  まずは基本から。<code>window</code> の <code>scroll</code> イベントを使ってスクロール量を取得する方法です。<br />
+  <code>scroll</code> イベントは<strong>スクロールするたびに発火するイベント</strong>で、
+  現在のスクロール位置は <code>window.scrollY</code> で取得できます。
+</p>
 
 <pre><code>const header = document.getElementById("header");
 
@@ -41,16 +39,20 @@ window.addEventListener("scroll", () => {
 });
 </code></pre>
 
-    <p>
-      このように数値で条件分岐すれば、スクロール量に応じてスタイルを変更できます。<br />
-      ただしこの方法は「JavaScriptが見た目を直接変更している」という点に注意が必要です。
-    </p>
+<p>
+  数値で条件分岐するだけなので、直感的に書けます。<br />
+  ただしこの書き方は <strong>JavaScriptが見た目を直接管理している</strong> 状態です。
+  デザイン変更のたびにJSを触ることになるので、ちょっと扱いにくい。
+</p>
 
-    <h2>classを切り替える実装（推奨）</h2>
-    <p>
-      styleを直接変更するのではなく、classを切り替える方が保守性が高くおすすめです。<br />
-      なぜなら「見た目の管理はCSS」「状態の管理はJavaScript」と責務を分離できるからです。
-    </p>
+<h2>classを切り替える実装（これが基本）</h2>
+<p>
+  実務でよく使われるのは、styleを直接触るのではなく <strong>classを切り替える方式</strong> です。<br />
+  なぜかというと、<strong>「見た目の管理はCSS」「状態の管理はJavaScript」</strong> と責務を分離できるからです。
+</p>
+<p>
+  これは前回の記事で触れた「責務の分離」と同じ考え方ですね。
+</p>
 
 <pre><code>window.addEventListener("scroll", () => {
   const scrollPosition = window.scrollY;
@@ -65,7 +67,7 @@ window.addEventListener("scroll", () => {
 });
 </code></pre>
 
-    <h3>対応するCSS</h3>
+<h3>対応するCSS</h3>
 
 <pre><code>#header {
   transition: background-color 0.3s;
@@ -80,20 +82,23 @@ window.addEventListener("scroll", () => {
 }
 </code></pre>
 
-    <p>
-      この方法なら、デザイン変更があった場合もCSS側だけ修正すればOKです。<br />
-      実務ではこちらの「class切り替え方式」が基本になると覚えておきましょう。
-    </p>
+<p>
+  この方法ならデザイン変更があっても、CSS側だけ修正すればOKです。<br />
+  <code>transition</code> を使えばアニメーションも一行で付けられるのも嬉しいポイント。<br />
+  まずはこの「class切り替え方式」を基本として覚えておきましょう。
+</p>
 
-    <h2>パフォーマンスを意識した実装</h2>
-    <p>
-      scrollイベントは非常に高頻度で発火します。<br />
-      そのため重い処理を書くとパフォーマンス低下の原因になります。
-    </p>
-    <p>
-      そこで使えるのがrequestAnimationFrameです。<br />
-      ブラウザの描画タイミングに合わせて処理を実行できるため、無駄な再計算を防げます。
-    </p>
+<h2>パフォーマンスを意識した実装</h2>
+<p>
+  実は <code>scroll</code> イベントには注意点があります。<strong>発火頻度がとても高い</strong>ことです。<br />
+  スクロール中は1秒間に数十〜100回以上イベントが飛んでくることもあり、
+  重い処理を書くとカクつきの原因になります。
+</p>
+<p>
+  そこで使えるのが <code>requestAnimationFrame</code> です。<br />
+  ブラウザの<strong>描画タイミング（約60fps）に合わせて処理を間引く</strong>テクニックで、
+  無駄な再計算を防げます。
+</p>
 
 <pre><code>let ticking = false;
 
@@ -109,23 +114,26 @@ window.addEventListener("scroll", () => {
 
 function updateHeader() {
   const scrollPosition = window.scrollY;
+  // ここにクラス切り替えの処理を書く
 }
 </code></pre>
 
-    <p>
-      スクロールイベント最適化は、特にモバイル環境で効果が出やすいです。<br />
-      パフォーマンスを意識するなら、この書き方はぜひ覚えておきたいところです。
-    </p>
+<p>
+  <code>ticking</code> フラグがポイントです。<br />
+  「描画タイミングが来るまで次のスクロールイベントを無視する」という仕組みで、
+  処理回数を描画に必要な分だけに絞っています。<br />
+  特にモバイル環境では効果が出やすいので、ぜひ覚えておきたいパターンです。
+</p>
 
-    <h2>IntersectionObserverを使う方法（モダン実装）</h2>
-    <p>
-      IntersectionObserverを使えば、scrollイベントを書かずに要素の表示状態を監視できます。<br />
-      「ある要素が画面に入ったかどうか」を検知できるAPIです。
-    </p>
-    <p>
-      なぜこれが便利かというと、ブラウザ側が最適化された形で監視してくれるからです。<br />
-      自前でスクロール位置を計算するよりも効率的に動作します。
-    </p>
+<h2>IntersectionObserverを使う方法（モダン実装）</h2>
+<p>
+  <code>IntersectionObserver</code> は、<strong>ある要素が画面（viewport）に入ったかどうかを監視できるAPI</strong>です。<br />
+  <code>scroll</code> イベントを一切書かずに、要素の表示状態だけで処理を走らせられます。
+</p>
+<p>
+  なぜこれが便利かというと、<strong>ブラウザ側が最適化された形で監視してくれる</strong>からです。
+  自前でスクロール位置を計算するよりも効率的に動作します。
+</p>
 
 <pre><code>const sections = document.querySelectorAll("section");
 
@@ -141,15 +149,55 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach((section) => observer.observe(section));
 </code></pre>
 
-    <p>
-      セクション単位で背景色を変えたいようなケースでは非常に相性が良いです。<br />
-      スクロール量ではなく「要素の可視状態」で制御したい場合はこちらを選びましょう。
-    </p>
+<p>
+  HTML側では <code>data-color</code> 属性で色を持たせておくイメージです。
+</p>
 
-    <h2>まとめ</h2>
-    <p>
-      スクロールに応じたスタイル変更は、基本はclass切り替えで実装するのがおすすめです。<br />
-      よりパフォーマンスを意識するならrequestAnimationFrameやIntersectionObserverも積極的に活用していきましょう。
-    </p>
+<pre><code>&lt;section data-color="#f0f4ff"&gt;セクション1&lt;/section&gt;
+&lt;section data-color="#fff4e6"&gt;セクション2&lt;/section&gt;
+</code></pre>
+
+<p>
+  セクション単位で背景色を変えたいケースとの相性が抜群です。<br />
+  「スクロール量」ではなく「<strong>要素の可視状態</strong>」で制御したいなら <code>IntersectionObserver</code> を選びましょう。
+</p>
+
+<h3>threshold オプションで検知タイミングを調整する</h3>
+<p>
+  少し応用になりますが、<code>IntersectionObserver</code> には <code>threshold</code> というオプションがあります。<br />
+  「要素が何割見えたら発火するか」を <code>0</code>〜<code>1</code> の数値で指定できます。
+</p>
+
+<pre><code>const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      }
+    });
+  },
+  {
+    threshold: 0.3, // 要素が30%見えたら発火
+  }
+);
+</code></pre>
+
+<p>
+  たとえば <code>threshold: 0</code> なら「少しでも見えたら」、<code>threshold: 1</code> なら「全部見えたら」発火します。<br />
+  フェードインアニメーションの発火タイミングを調整するときなどに重宝するオプションです。
+</p>
+
+<h2>まとめ：どれを使えばいい？</h2>
+<p>
+  3つの方法を整理するとこうなります。
+</p>
+<ul>
+  <li><strong>scrollイベント + class切り替え</strong> — 基本。スクロール量で細かく制御したいときに</li>
+  <li><strong>requestAnimationFrame と組み合わせる</strong> — パフォーマンスが気になるなら必須</li>
+  <li><strong>IntersectionObserver</strong> — 要素の表示状態を監視したいときに。コードもスッキリする</li>
+</ul>
+<p>
+  迷ったら「スクロール量で制御したい → scrollイベント」「要素が見えたら何かしたい → IntersectionObserver」で選ぶとシンプルです。
+</p>
   `,
 };

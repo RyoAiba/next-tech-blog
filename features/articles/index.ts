@@ -47,6 +47,7 @@ import { whatIsTypescript } from "./content/what-is-typescript";
 import { cssLayoutFlexGridDifference } from "./content/css-layout-flex-grid-difference";
 import { vuePerformanceOptimization } from "./content/vue-performance-optimization";
 import { uiVisualHierarchy } from "./content/ui-visual-hierarchy";
+import { javascriptAjax } from "./content/javascript-ajax";
 // 記事が増えたらここにimport追加
 
 /**
@@ -68,6 +69,7 @@ const rawArticles = [
   cssLayoutFlexGridDifference,
   vuePerformanceOptimization,
   uiVisualHierarchy,
+  javascriptAjax,
 ];
 
 /**
