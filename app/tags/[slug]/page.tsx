@@ -2,8 +2,9 @@
  * タグ別一覧ページ
  */
 
+import { notFound } from "next/navigation";
 import ArticleArchive from "@/components/article/ArticleArchive";
-import { getArticlesByTag } from "@/features/articles";
+import { getArticlesByTag, getArticleCountByTag } from "@/features/articles";
 import { tags } from "@/lib/tags";
 
 type Props = {
@@ -14,9 +15,17 @@ type Props = {
 export default async function TagPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const { page } = await searchParams;
-  const currentPage = Number(page ?? "1");
-  const { articles, totalPages } = getArticlesByTag(slug, currentPage, 2);
   const tagInfo = tags.find((t) => t.slug === slug);
+  if (!tagInfo) notFound();
+  const currentPage = Number(page ?? "1");
+  if (!Number.isInteger(currentPage) || currentPage < 1) notFound();
+  const totalCount = getArticleCountByTag(slug);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(totalCount / 2)
+  );
+  if (currentPage > totalPages) notFound();
+  const articles  = getArticlesByTag(slug, currentPage, 2);
   const label = tagInfo?.name ?? slug;
 
   return (

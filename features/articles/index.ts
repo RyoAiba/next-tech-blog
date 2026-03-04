@@ -71,7 +71,7 @@ const rawArticles = [
 ];
 
 /**
- * updatedAtを追加した記事配列
+ * 更新日時を追加した記事配列
  */
 export const articles: Article[] = rawArticles.map((article) => {
   const updatedAt = (() => {
@@ -110,43 +110,37 @@ function paginate(
   items: Article[],
   page: number,
   perPage: number
-): PaginatedArticles {
-  const totalPages = Math.ceil(items.length / perPage);
-
+): Article[] {
   const start = (page - 1) * perPage;
   const end = start + perPage;
-
-  return {
-    articles: items.slice(start, end),
-    totalPages,
-    currentPage: page,
-  };
+  return items.slice(start, end);
 }
 
 /**
- * slugから記事取得
+ * 全記事一覧取得(ページネーション対応)
  */
-export function getArticleBySlug(slug: string) {
-  return articles.find((a) => a.slug === slug);
+export function getAllArticles(
+  page: number = 1,
+  perPage: number = 5
+): Article[] {
+  return paginate(articles, page, perPage);
 }
 
 /**
- * タグ別記事一覧取得
+ * 全記事件数取得
  */
-// export function getArticlesByTag(slug: string) {
-//   return articles.filter((article) =>
-//     article.tags.some((tag) => tag.slug === slug)
-//   );
-// }
+export function getAllArticleCount() {
+  return articles.length;
+}
 
 /**
- * タグ別記事一覧（ページネーション対応）
+ * タグ別記事一覧取得(ページネーション対応)
  */
 export function getArticlesByTag(
   slug: string,
   page: number = 1,
   perPage: number = 5
-): PaginatedArticles {
+): Article[] {
   const filtered = articles.filter((article) =>
     article.tags.some((tag) => tag.slug === slug)
   );
@@ -154,20 +148,19 @@ export function getArticlesByTag(
 }
 
 /**
- * 全記事取得（SSG用）
+ * タグ別記事件数取得
  */
-// export function getAllArticles() {
-//   return articles;
-// }
+export function getArticleCountByTag(slug: string) {
+  return articles.filter((article) =>
+    article.tags.some((tag) => tag.slug === slug)
+  ).length;
+}
 
 /**
- * 全記事一覧（ページネーション対応）
+ * slugから記事取得
  */
-export function getAllArticles(
-  page: number = 1,
-  perPage: number = 5
-): PaginatedArticles {
-  return paginate(articles, page, perPage);
+export function getArticleBySlug(slug: string) {
+  return articles.find((a) => a.slug === slug);
 }
 
 /**
