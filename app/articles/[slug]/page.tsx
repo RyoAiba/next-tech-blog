@@ -145,7 +145,6 @@ export default async function ArticlePage({ params }: Props) {
                 {/* シェアボタン */}
                 <ShareButtons
                   title={article.title}
-                  url={articleUrl}
                 />
                 {/* 前後記事ナビ */}
                 <hr className="my-4 md:my-8 border-zinc-200" />

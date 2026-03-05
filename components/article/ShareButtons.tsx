@@ -8,18 +8,18 @@ import { useState } from "react";
 
 type Props = {
   title: string;
-  url: string;
 };
 
-export default function ShareButtons({ title, url }: Props) {
+export default function ShareButtons({ title }: Props) {
   const [copied, setCopied] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const encodedUrl = encodeURIComponent(url);
+  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+  const encodedUrl = encodeURIComponent(currentUrl);
   const encodedTitle = encodeURIComponent(title);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(currentUrl);
 
     setVisible(true);
     setCopied(true);
