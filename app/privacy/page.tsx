@@ -3,6 +3,7 @@
  */
 
 import Link from "next/link";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +14,14 @@ export const metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="max-w-7xl mx-auto px-4 md:px-10 py-6 md:py-10 prose prose-zinc prose-sm md:prose-base leading-relaxed">
+    <main className="max-w-3xl mx-auto px-4 md:px-10 py-6 md:py-10 prose prose-zinc prose-sm md:prose-base leading-relaxed">
+      {/* パンくず */}
+      <Breadcrumb
+        items={[
+          { label: "Usagi Blog", href: "/" },
+          { label: "プライバシーポリシー" },
+        ]}
+      />
       <h1 className="text-2xl md:text-3xl">プライバシーポリシー</h1>
 
       <p>
