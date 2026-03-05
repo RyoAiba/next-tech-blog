@@ -61,10 +61,6 @@ export async function generateMetadata(
  */
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  const articleUrl = `${baseUrl}/articles/${slug}`;
-
   const article = getArticleBySlug(slug);
   const relatedArticles = getRelatedArticles(slug, 3);
 
