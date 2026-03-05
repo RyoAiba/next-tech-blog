@@ -44,8 +44,20 @@ export async function POST(request: Request) {
       ① 不正アクセス対策のRefererチェック
     ====================== */
     const referer = request.headers.get("referer");
-    if (!referer || !referer.includes("usagidoki.com")) {
-      return NextResponse.json({ error: "送信に失敗しました" }, { status: 403 });
+
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "https://usagi-blog.vercel.app",
+    ];
+
+    if (
+      !referer ||
+      !allowedOrigins.some((origin) => referer.startsWith(origin))
+    ) {
+      return NextResponse.json(
+        { error: "送信に失敗しました" },
+        { status: 403 }
+      );
     }
 
     /* ======================
