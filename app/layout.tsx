@@ -13,6 +13,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 config.autoAddCss = false;
 
@@ -83,6 +84,8 @@ export default function RootLayout({
             });
           `}
         </Script>
+        {/* Speed Insights */}
+        <SpeedInsights/>
       </body>
     </html>
   );
