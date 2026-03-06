@@ -17,14 +17,19 @@ export default function Footer() {
           >
             プライバシーポリシー
           </Link>
-
           <span className="mx-2">|</span>
-
           <Link
             href="/contact"
             className="hover:underline"
           >
             お問い合わせ
+          </Link>
+          <span className="mx-2">|</span>
+          <Link
+            href="/about"
+            className="hover:underline"
+          >
+            Usagi Blogについて
           </Link>
         </div>
 

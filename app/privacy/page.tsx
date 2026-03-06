@@ -129,7 +129,7 @@ export default function PrivacyPolicyPage() {
 
       <h2>お問い合わせ</h2>
       <p>
-        プライバシーに関するお問い合わせは以下のフォームからご連絡ください：
+        プライバシーに関するお問い合わせは以下のフォームからご連絡ください。
       </p>
       <p>
         <Link href="/contact" className="text-blue-600 hover:underline">
@@ -137,7 +137,7 @@ export default function PrivacyPolicyPage() {
         </Link>
       </p>
 
-      <p>最終更新日: 2026年2月22日</p>
+      <p className="text-sm text-zinc-400">最終更新日: 2026年2月22日</p>
     </main>
   );
 }
