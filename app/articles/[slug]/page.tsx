@@ -1,9 +1,10 @@
 /**
- * 記事詳細ページ
+ * 記事ページ
  */
 
-import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
 import {
   articles,
   getArticleBySlug,
@@ -11,7 +12,6 @@ import {
   getRelatedArticles,
 } from "@/features/articles";
 import { extractHeadings } from "@/lib/toc";
-import Link from "next/link";
 import ArticleCard from "@/components/article/ArticleCard";
 import ArticleContent from "@/components/article/ArticleContent";
 import MobileTocBar from "@/components/article/MobileTocBar";
@@ -133,11 +133,7 @@ export default async function ArticlePage({ params }: Props) {
                   </div>
                 </header>
                 {/* 本文 */}
-                <div
-                  className="prose prose-zinc prose-pre:overflow-x-auto prose-pre:p-4 prose-pre:rounded-lg max-w-none"
-                >
-                  <ArticleContent content={contentWithIds} />
-                </div>
+                <ArticleContent content={contentWithIds} />
                 {/* シェアボタン */}
                 <ShareButtons
                   title={article.title}
