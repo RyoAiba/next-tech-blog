@@ -12,6 +12,13 @@ export default function ContactForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const isValid =
+    name.trim() &&
+    email.trim() &&
+    subject.trim() &&
+    message.trim() &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -73,12 +80,12 @@ export default function ContactForm() {
             <label className="block font-bold">メールアドレス</label>
             <div className="ml-2 h-5 self-center px-1.5 py-0.75 bg-[#ff4b4b] text-xs text-white rounded">必須</div>
           </div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full border border-zinc-300 px-3 py-2 bg-white rounded"
-        />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border border-zinc-300 px-3 py-2 bg-white rounded"
+          />
         </div>
         <div>
           <div className="flex mb-1">
@@ -107,7 +114,13 @@ export default function ContactForm() {
         <div className="text-center">
           <button
             type="submit"
-            className="bg-[var(--brand-500)] text-white font-semibold px-5 py-2 rounded cursor-pointer"
+            disabled={!isValid}
+            className={`
+              font-semibold px-5 py-2 rounded
+              ${isValid
+                ? "bg-[var(--brand-500)] text-white cursor-pointer"
+                : "bg-gray-200 text-gray-400 cursor-default"}
+            `}
           >
             送信する
           </button>
@@ -117,7 +130,7 @@ export default function ContactForm() {
           type="text"
           name="company"
           value=""
-          onChange={() => {}}
+          onChange={() => { }}
           className="hidden"
         />
       </form>
