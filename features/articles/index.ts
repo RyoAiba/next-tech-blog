@@ -53,6 +53,8 @@ import { typescriptApiResponseType } from "./content/typescript-api-response-typ
 import { vueCompositionVsOptions } from "./content/vue-composition-vs-options";
 import { vueLoadingSpinner } from "./content/vue-loading-spinner";
 import { vuePiniaIntroduction } from "./content/vue-pinia-introduction";
+import { reactTocComponent } from "./content/react-toc-component";
+import { reactTocComponentMobile } from "./content/react-toc-component-mobile";
 // 記事が増えたらここにimport追加
 
 /**
@@ -81,28 +83,30 @@ const rawArticles = [
   vueCompositionVsOptions,
   vueLoadingSpinner,
   vuePiniaIntroduction,
+  reactTocComponent,
+  reactTocComponentMobile,
 ];
 
 /**
  * 更新日時を追加した記事配列
  */
 export const articles: Article[] = rawArticles
-.map((article) => {
-  const updatedAt = article.updatedAt ?? article.publishedAt
-  const updatedAtTimestamp = article.updatedAtTimestamp ?? new Date(article.publishedAt.replace(/\./g, "-")).getTime();
+  .map((article) => {
+    const updatedAt = article.updatedAt ?? article.publishedAt
+    const updatedAtTimestamp = article.updatedAtTimestamp ?? new Date(article.publishedAt.replace(/\./g, "-")).getTime();
 
-  return {
-    ...article,
-    updatedAt: updatedAt,
-    updatedAtTimestamp: updatedAtTimestamp,
-  };
-})
-.sort((a, b) => {
-  return (
-    (b.updatedAtTimestamp ?? 0) -
-    (a.updatedAtTimestamp ?? 0)
-  );
-});
+    return {
+      ...article,
+      updatedAt: updatedAt,
+      updatedAtTimestamp: updatedAtTimestamp,
+    };
+  })
+  .sort((a, b) => {
+    return (
+      (b.updatedAtTimestamp ?? 0) -
+      (a.updatedAtTimestamp ?? 0)
+    );
+  });
 articles.map((a) => {
   console.log("title", a.title);
   console.log("updatedAt", a.updatedAt);
