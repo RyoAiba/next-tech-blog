@@ -49,6 +49,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  verification: {
+    google: "bZaac-w3ajq_VEzAdk49KXuuBYR01Hd6P1azarFCsTg",
+  },
 };
 
 export default function RootLayout({
@@ -93,7 +96,7 @@ export default function RootLayout({
           `}
         </Script>
         {/* Speed Insights */}
-        <SpeedInsights/>
+        <SpeedInsights />
       </body>
     </html>
   );
