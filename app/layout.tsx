@@ -23,9 +23,9 @@ export const metadata: Metadata = {
     default: "Usagi Blog",
     template: "%s | Usagi Blog",
   },
-  description: "Tech articles and engineering insights by Usagi.",
+  description: "Next.js・TypeScript・UI設計を中心に、実務で得た知見や設計ノウハウを解説する技術ブログ。",
   alternates: {
-    canonical: "https://usagi-blog.vercel.app",
+    canonical: "/",
   },
   icons: {
     icon: "/icon.svg",
@@ -37,13 +37,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Usagi Blog",
-    description: "Tech articles and engineering insights by Usagi.",
+    description: "Next.js・TypeScript・UI設計を中心にした技術ブログ",
     url: "https://usagi-blog.vercel.app",
     siteName: "Usagi Blog",
     type: "website",
     images: [
       {
-        url: "/avatar.svg",
+        url: "/default-eyecatch.svg",
         width: 1200,
         height: 630,
       },
