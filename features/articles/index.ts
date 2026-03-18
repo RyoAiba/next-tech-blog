@@ -55,6 +55,8 @@ import { vueLoadingSpinner } from "./content/vue-loading-spinner";
 import { vuePiniaIntroduction } from "./content/vue-pinia-introduction";
 import { reactTocComponent } from "./content/react-toc-component";
 import { reactTocComponentMobile } from "./content/react-toc-component-mobile";
+import { gitCommitUndo } from "./content/git-commit-undo";
+import { gitMergeVsRebase } from "./content/git-merge-vs-rebase";
 // 記事が増えたらここにimport追加
 
 /**
@@ -85,6 +87,8 @@ const rawArticles = [
   vuePiniaIntroduction,
   reactTocComponent,
   reactTocComponentMobile,
+  gitCommitUndo,
+  gitMergeVsRebase,
 ];
 
 /**
