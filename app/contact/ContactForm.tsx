@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -8,9 +9,9 @@ export default function ContactForm() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [company, setCompany] = useState(""); // Bot対策用ダミー
-
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false); // 二重送信防止
+  const router = useRouter();
 
   const isValid =
     name.trim() &&
@@ -21,6 +22,8 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // 二重送信防止
+    if (loading) return;
     setError("");
 
     if (!name || !email || !subject || !message) {
@@ -33,33 +36,38 @@ export default function ContactForm() {
       return;
     }
 
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, subject, message, company }),
-    });
+    setLoading(true);
 
-    const json = await res.json();
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message, company }),
+      });
 
-    if (json.error) {
-      setError(json.error);
-    } else {
-      setSuccess(true);
+      const json = await res.json();
+
+      if (json.error) {
+        setError(json.error);
+        return;
+      }
+
+      // リセット（念の為）
       setName("");
       setEmail("");
       setSubject("");
       setMessage("");
       setCompany("");
+
+      router.push("/contact/thanks");
+    } catch (e) {
+      setError("送信に失敗しました。時間をおいて再度お試しください。");
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {success && (
-        <p className="text-green-600 mb-4">
-          お問い合わせを送信しました。
-        </p>
-      )}
       {error && <p className="text-[#ff4b4b] mb-4">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4 text-zinc-700">
@@ -109,28 +117,28 @@ export default function ContactForm() {
             onChange={(e) => setMessage(e.target.value)}
             className="w-full max-h-50 min-h-20 md:h-30 border border-zinc-300 px-3 py-2 bg-white rounded"
             rows={6}
-          ></textarea>
+          />
         </div>
         <div className="text-center">
           <button
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || loading}
             className={`
               font-semibold px-5 py-2 rounded
-              ${isValid
+              ${isValid && !loading
                 ? "bg-[var(--brand-500)] text-white cursor-pointer"
                 : "bg-gray-200 text-gray-400 cursor-default"}
             `}
           >
-            送信する
+            {loading ? "送信中..." : "送信する"}
           </button>
         </div>
         {/* Bot対策（Honeypot） */}
         <input
           type="text"
           name="company"
-          value=""
-          onChange={() => { }}
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
           className="hidden"
         />
       </form>
