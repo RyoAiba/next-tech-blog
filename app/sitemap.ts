@@ -7,7 +7,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const articleUrls = articles.map((article) => ({
     url: `${baseUrl}/articles/${article.slug}`,
-    lastModified: article.updatedAt ?? article.publishedAt,
+    lastModified: new Date(
+      article.updatedAt ?? article.publishedAt ?? new Date()
+    ).toISOString(),
   }));
 
   return [
