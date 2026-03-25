@@ -57,6 +57,8 @@ import { reactTocComponent } from "./content/react-toc-component";
 import { reactTocComponentMobile } from "./content/react-toc-component-mobile";
 import { gitCommitUndo } from "./content/git-commit-undo";
 import { gitMergeVsRebase } from "./content/git-merge-vs-rebase";
+import { vueFirebaseFirst } from "./content/vueFirebaseFirst";
+import { vueFirebaseSecond } from "./content/vueFirebaseSecond";
 // 記事が増えたらここにimport追加
 
 /**
@@ -89,6 +91,8 @@ const rawArticles = [
   reactTocComponentMobile,
   gitCommitUndo,
   gitMergeVsRebase,
+  vueFirebaseFirst,
+  vueFirebaseSecond,
 ];
 
 /**
