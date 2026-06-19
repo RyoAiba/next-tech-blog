@@ -14,136 +14,106 @@ export default function ShareButtons({ title }: Props) {
   const [copied, setCopied] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
-  const encodedUrl = encodeURIComponent(currentUrl);
-  const encodedTitle = encodeURIComponent(title);
+  const isDev = process.env.NODE_ENV === "development";
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(currentUrl);
+    if (isDev) return;
+
+    await navigator.clipboard.writeText(window.location.href);
 
     setVisible(true);
     setCopied(true);
 
     setTimeout(() => {
-      setCopied(false); // フェードアウト開始
+      setCopied(false);
     }, 1200);
 
     setTimeout(() => {
-      setVisible(false); // DOMから削除
+      setVisible(false);
     }, 1350);
   };
 
+  const handleShare = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    service: "twitter" | "facebook" | "hatena"
+  ) => {
+    event.preventDefault();
+
+    if (isDev) return;
+
+    const encodedUrl = encodeURIComponent(window.location.href);
+    const encodedTitle = encodeURIComponent(title);
+
+    const shareUrl =
+      service === "twitter"
+        ? `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`
+        : service === "facebook"
+          ? `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
+          : `https://b.hatena.ne.jp/add?mode=confirm&url=${encodedUrl}&title=${encodedTitle}`;
+
+    window.open(shareUrl, "_blank", "noopener,noreferrer");
+  };
+
   const baseStyle =
-  "w-10 h-10 flex items-center justify-center cursor-pointer transition-colors duration-200 text-zinc-400 hover:text-[#00c8af]";
+    "w-10 h-10 flex items-center justify-center cursor-pointer transition-colors duration-200 text-zinc-400 hover:text-[#00c8af]";
 
   return (
     <div className="mt-16 pt-8">
       <div className="flex gap-4 justify-end">
-        {/* コピーアイコン */}
         <button
           onClick={handleCopy}
           className={`${baseStyle} relative`}
           aria-label="リンクをコピー"
+          type="button"
         >
-          {/* 吹き出し */}
           {visible && (
             <span
               className={`
-                absolute
-                -top-6
-                left-1/2
-                -translate-x-1/2
-                bg-zinc-800
-                text-white
-                text-xs
-                px-2
-                py-1
-                rounded-md
-                whitespace-nowrap
-                pointer-events-none
+                absolute -top-6 left-1/2 -translate-x-1/2
+                bg-zinc-800 text-white text-xs px-2 py-1 rounded-md
+                whitespace-nowrap pointer-events-none
                 ${copied ? "tooltip-enter" : "tooltip-exit"}
               `}
             >
               リンクをコピーしました
-              <span
-                className="
-                  absolute
-                  left-1/2
-                  -translate-x-1/2
-                  top-[calc(100%-4px)]
-                  w-2
-                  h-2
-                  bg-zinc-800
-                  rotate-45
-                "
-              />
+              <span className="absolute left-1/2 -translate-x-1/2 top-[calc(100%-4px)] w-2 h-2 bg-zinc-800 rotate-45" />
             </span>
           )}
 
-          <svg
-            viewBox="0 0 27 27"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7"
-          >
+          <svg viewBox="0 0 27 27" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
             <path d="M9.6 23.9c-3.6 0-6.5-3-6.5-6.6 0-1.7.7-3.4 1.9-4.6l2.3-2.3c.5-.4 1.2-.4 1.6.1.4.4.4 1 0 1.5l-2.3 2.3c-1.7 1.7-1.7 4.4 0 6.1s4.4 1.7 6.1 0l2.3-2.3c.5-.4 1.2-.4 1.6.1.4.4.4 1 0 1.5L14.3 22c-1.3 1.2-2.9 1.9-4.7 1.9Zm1-6.4c-.6 0-1.1-.5-1.1-1.1 0-.3.1-.6.3-.8l5.8-5.8c.4-.4 1.1-.4 1.6 0 .4.4.4 1.1 0 1.6l-5.8 5.8c-.2.2-.5.3-.8.3Zm8.3-.6c-.3 0-.6-.1-.8-.3-.4-.4-.4-1.1 0-1.6l2.3-2.3c1.7-1.7 1.7-4.4 0-6.1-1.7-1.7-4.4-1.7-6.1 0L12 8.9c-.5.4-1.2.4-1.6-.1-.4-.4-.4-1 0-1.5L12.7 5c2.6-2.6 6.7-2.6 9.2 0s2.6 6.7 0 9.2l-2.3 2.4c-.2.2-.5.3-.7.3Z" />
           </svg>
         </button>
 
-        {/* X (Twitter) */}
         <a
-          href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
+          onClick={(event) => handleShare(event, "twitter")}
           className={baseStyle}
           aria-label="Xでシェア"
         >
-          {/* Xアイコン */}
-          <svg
-            viewBox="0 0 27 28"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
-          >
+          <svg viewBox="0 0 27 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
             <path d="M16.0687 11.7356L26.12 0H23.7382L15.0106 10.1899L8.03988 0H0L10.5411 15.4089L0 27.7155H2.38199L11.5985 16.9546L18.9601 27.7155H27L16.0681 11.7356H16.0687ZM12.8062 15.5447L11.7382 14.0103L3.24025 1.80106H6.89884L13.7568 11.6543L14.8248 13.1887L23.7393 25.9963H20.0807L12.8062 15.5452V15.5447Z" />
           </svg>
         </a>
 
-        {/* Facebook */}
         <a
-          href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
+          onClick={(event) => handleShare(event, "facebook")}
           className={baseStyle}
           aria-label="Facebookでシェア"
         >
-          {/* Facebookアイコン */}
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 28 28"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M28 14C28 6.268 21.732 0 14 0C6.268 0 0 6.268 0 14C0 20.589 4.52 26.118 10.618 27.637V18.293H7.731V14H10.618V12.149C10.618 7.366 12.775 5.149 17.453 5.149C18.34 5.149 19.871 5.324 20.497 5.498V9.391C20.166 9.356 19.592 9.339 18.879 9.339C16.584 9.339 15.697 10.212 15.697 12.481V14H20.27L19.484 18.293H15.697V28C22.629 27.16 28 21.184 28 14Z"/>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 14C28 6.268 21.732 0 14 0C6.268 0 0 6.268 0 14C0 20.589 4.52 26.118 10.618 27.637V18.293H7.731V14H10.618V12.149C10.618 7.366 12.775 5.149 17.453 5.149C18.34 5.149 19.871 5.324 20.497 5.498V9.391C20.166 9.356 19.592 9.339 18.879 9.339C16.584 9.339 15.697 10.212 15.697 12.481V14H20.27L19.484 18.293H15.697V28C22.629 27.16 28 21.184 28 14Z" />
           </svg>
         </a>
 
-        {/* はてなブックマーク */}
         <a
-          href={`https://b.hatena.ne.jp/add?mode=confirm&url=${encodedUrl}&title=${encodedTitle}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
+          onClick={(event) => handleShare(event, "hatena")}
           className={baseStyle}
           aria-label="はてなブックマーク"
         >
-          {/* はてなアイコン */}
-          <svg
-            viewBox="0 0 27 28"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7"
-          >
+          <svg viewBox="0 0 27 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
