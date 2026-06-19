@@ -5,7 +5,7 @@
   --background: #ffffff;
   --foreground: #171717;
   /* ブランドカラー */
-  --brand-50:  #F4FFFD;
+  --brand-50: #F4FFFD;
   --brand-100: #ECFFFB;
   --brand-150: #DFFCF7;
   --brand-200: #CFF9F3;
@@ -48,6 +48,7 @@ h2 {
   border-left: 4px solid var(--brand-500);
   position: relative;
 }
+
 @media (min-width: 768px) {
   h2 {
     font-size: 1.5rem;
@@ -63,6 +64,7 @@ h3 {
   padding-bottom: 0.25rem;
   position: relative;
 }
+
 h3::after {
   content: "";
   position: absolute;
@@ -70,13 +72,12 @@ h3::after {
   bottom: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    var(--brand-500),
-    var(--brand-300)
-  );
+  background: linear-gradient(90deg,
+      var(--brand-500),
+      var(--brand-300));
   border-radius: 9999px;
 }
+
 @media (min-width: 768px) {
   h3 {
     font-size: 1.25rem;
@@ -91,12 +92,10 @@ h3::after {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    #f9f9f9,
-    var(--brand-300),
-    #f9f9f9
-  );
+  background: linear-gradient(180deg,
+      #f9f9f9,
+      var(--brand-300),
+      #f9f9f9);
   background-size: 200% 200%;
 }
 
@@ -108,7 +107,7 @@ h3::after {
   position: absolute;
   bottom: -200px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   opacity: 0;
   filter: blur(1px);
   animation: bubbleUp linear infinite;
@@ -194,13 +193,11 @@ h3::after {
 .hero-heading {
   display: inline-block;
   padding: 0.5rem 1rem 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.8),
-    #ffffff
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.8),
+      #ffffff);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
@@ -212,6 +209,7 @@ h3::after {
     opacity: 0;
     transform: translateY(6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -226,6 +224,7 @@ h3::after {
     opacity: 1;
     transform: translateY(0);
   }
+
   to {
     opacity: 0;
     transform: translateY(6px);
@@ -245,26 +244,28 @@ h3::after {
 ========================= */
 .card-base {
   background-color: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08),
-              0 1px 2px -1px rgb(0 0 0 / 0.08);
+    0 1px 2px -1px rgb(0 0 0 / 0.08);
   transition: all 0.2s ease;
 }
+
 .card-base-hover {
   cursor: pointer;
 }
+
 .card-base-hover:hover {
-  box-shadow: 0 8px 20px rgb(0 0 0 / 0.08);
-  transform: translateY(-4px);
+  box-shadow: 0 8px 10px rgb(0 0 0 / 0.08);
+  transform: translateY(-2px);
 }
+
 @media (min-width: 768px) {
   .article-card-base {
     background-color: #ffffff;
     border: 1px solid #e4e4e7;
     border-radius: 0.75rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08),
-                0 1px 2px -1px rgb(0 0 0 / 0.08);
+      0 1px 2px -1px rgb(0 0 0 / 0.08);
     transition: all 0.2s ease;
   }
 }
@@ -279,6 +280,7 @@ pre {
   border-radius: 0.5rem;
   overflow-x: auto;
 }
+
 pre code {
   display: block;
   padding: 1.25rem !important;
@@ -288,6 +290,7 @@ pre code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   background: transparent;
 }
+
 @media (min-width: 768px) {
   pre code {
     font-size: 0.875rem;

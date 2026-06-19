@@ -123,11 +123,6 @@ export const articles: Article[] = rawArticles
       (a.updatedAtTimestamp ?? 0)
     );
   });
-articles.map((a) => {
-  console.log("title", a.title);
-  console.log("updatedAt", a.updatedAt);
-  console.log("updatedAtTimestamp", a.updatedAtTimestamp);
-});
 
 /**
  * 汎用ページネーション処理
