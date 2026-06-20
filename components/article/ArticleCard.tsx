@@ -6,6 +6,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { CalendarBlank } from "@phosphor-icons/react/dist/ssr";
 import TagBadge from "./TagBadge";
 import type { Article } from "@/features/articles";
 
@@ -46,10 +47,9 @@ export default function ArticleCard({
             shrink-0
             overflow-hidden
             self-center
-            ${
-              isRelated
-                ? "h-20 w-20 md:w-full md:h-36"
-                : "h-20 w-20 md:h-28 md:w-28"
+            ${isRelated
+              ? "h-20 w-20 md:w-full md:h-36"
+              : "h-20 w-20 md:h-28 md:w-28"
             }
           `}
         >
@@ -65,6 +65,11 @@ export default function ArticleCard({
 
         {/* テキストエリア */}
         <div>
+          {/* タイトル */}
+          <div className="mb-1 md:mb-2 md:text-xl font-semibold text-zinc-900">
+            {article.title}
+          </div>
+
           {/* タグ */}
           <div className="mb-1 md:mb-2 flex flex-wrap gap-2">
             {article.tags.map((tag) => (
@@ -72,18 +77,14 @@ export default function ArticleCard({
             ))}
           </div>
 
-          {/* タイトル */}
-          <div className="mb-1 md:mb-2 md:text-xl font-semibold text-zinc-900">
-            {article.title}
-          </div>
-
           {/* メタ */}
-          <div className="text-xs text-zinc-500">
-            {article.updatedAt !== article.publishedAt ? (
-              <span></span>  // TODO:更新アイコン
-            ) : (
-              <span></span>  // TODO:新規アイコン
-            )}
+          <div className="flex items-center gap-0.5 text-xs text-zinc-500">
+            <CalendarBlank
+              size={14}
+              weight="regular"
+              className="shrink-0 text-zinc-400"
+              aria-hidden="true"
+            />
             <span>{article.updatedAt}</span>
           </div>
         </div>

@@ -61,7 +61,7 @@ export default function ContactForm() {
 
       router.push("/contact/thanks");
     } catch (e) {
-      setError("送信に失敗しました。時間をおいて再度お試しください。");
+      setError("送信に失敗しました。時間をおいて再度お試しください。" + (e as Error).message);
       setLoading(false);
     }
   };
