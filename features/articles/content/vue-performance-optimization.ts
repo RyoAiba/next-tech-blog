@@ -9,7 +9,7 @@ export const vuePerformanceOptimization: Article = {
   updatedAt: undefined,
   updatedAtTimestamp: undefined,
   tags: [
-    { name: "Vue", slug: "vue" },
+    { name: "Vue.js", slug: "vue.js" },
     { name: "パフォーマンス", slug: "performance" },
   ],
   content: `

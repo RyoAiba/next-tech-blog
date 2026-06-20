@@ -1,7 +1,7 @@
 export const tags = [
   // 技術
   { name: "React", slug: "react" },
-  { name: "Vue", slug: "vue" },
+  { name: "Vue.js", slug: "vue.js" },
   { name: "Next.js", slug: "nextjs" },
   { name: "TypeScript", slug: "typescript" },
   { name: "JavaScript", slug: "javascript" },

@@ -9,7 +9,7 @@ export const vuePiniaIntroduction: Article = {
   updatedAt: undefined,
   updatedAtTimestamp: undefined,
   tags: [
-    { name: "Vue", slug: "vue" },
+    { name: "Vue.js", slug: "vue.js" },
     { name: "TypeScript", slug: "typescript" },
   ],
   content: `

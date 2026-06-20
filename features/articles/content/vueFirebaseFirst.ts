@@ -9,7 +9,7 @@ export const vueFirebaseFirst: Article = {
   updatedAt: undefined,
   updatedAtTimestamp: undefined,
   tags: [
-    { name: "Vue", slug: "vue" },
+    { name: "Vue.js", slug: "vue.js" },
   ],
   content: `
     <h2>この記事について</h2>

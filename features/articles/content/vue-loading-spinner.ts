@@ -9,7 +9,7 @@ export const vueLoadingSpinner: Article = {
   updatedAt: undefined,
   updatedAtTimestamp: undefined,
   tags: [
-    { name: "Vue", slug: "vue" },
+    { name: "Vue.js", slug: "vue.js" },
     { name: "CSS", slug: "css" },
     { name: "UI", slug: "ui" },
   ],
