@@ -13,6 +13,9 @@
   --brand-400: #4ED9C8;
   --brand-500: #00C8AF;
   --brand-600: #00B39D;
+  --brand-700: #009988;
+  --brand-800: #007A6D;
+  --brand-900: #005C52;
 }
 
 @theme inline {
@@ -296,4 +299,51 @@ pre code {
   pre code {
     font-size: 0.875rem;
   }
+}
+
+/* =========================
+  関連記事
+========================= */
+.article-related-card {
+  display: block;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.article-related-card:hover {
+  border-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.article-related-card-label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.article-related-card-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #111827;
+}
+
+.article-related-card-title::after {
+  content: "→";
+  margin-left: 6px;
+  color: #2563eb;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.article-related-card:hover .article-related-card-title::after {
+  transform: translateX(3px);
 }
